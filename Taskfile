@@ -13,8 +13,10 @@ run-day() {
         return 1
     fi
     day=$(printf "%02d" "$1")
+    shift
+
     echo "----- Day $day -----"
-    "$PYTHON_EXE" "$REPO_ROOT/days/day_$day.py" "$REPO_ROOT/data/day_$day.txt"
+    "$PYTHON_EXE" "$REPO_ROOT/days/day_$day.py" "$REPO_ROOT/data/day_$day.txt" $@
     # Run with timeit to get time
     "$PYTHON_EXE" -m timeit -s "import days" "days.day_$day.main(['data/day_$day.txt'])" | tail -n 1
 }
@@ -23,7 +25,7 @@ run-all-days() {
     for i in {1..25}; do
         day=$(printf "%02d" "$i")
         if [ -f "$REPO_ROOT/days/day_$day.py" ]; then
-            run-day "$i"
+            run-day "$i" $@
         fi
     done
 }
@@ -34,15 +36,16 @@ run-test() {
         return 1
     fi
     day=$(printf "%02d" "$1")
-    "$PYTHON_EXE" -m pytest "$REPO_ROOT/tests/test_day_$day.py"
+    shift
+    "$PYTHON_EXE" -m pytest "$REPO_ROOT/tests/test_day_$day.py" $@
 }
 
 run-all-tests() {
-    "$PYTHON_EXE" -m pytest "$REPO_ROOT/tests"
+    "$PYTHON_EXE" -m pytest "$REPO_ROOT/tests" $@
 }
 
 run-mypy() {
-    "$PYTHON_EXE" -m mypy --strict "$REPO_ROOT/days" "$REPO_ROOT/tests"
+    "$PYTHON_EXE" -m mypy --strict "$REPO_ROOT/days" "$REPO_ROOT/tests" $@
 }
 
 autoformat() {
