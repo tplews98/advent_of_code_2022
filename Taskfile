@@ -1,0 +1,63 @@
+#!/bin/bash
+
+# Stop on failure
+set -e
+
+REPO_ROOT="$(git rev-parse --show-toplevel)"
+
+PYTHON_EXE="/usr/bin/python3.11"
+
+run-day() {
+    if [ -z "$1" ]; then
+        echo "Must provide day to run" 1>&2
+        return 1
+    fi
+    day=$(printf "%02d" "$1")
+    echo "----- Day $day -----"
+    "$PYTHON_EXE" "$REPO_ROOT/days/day_$day.py" "$REPO_ROOT/data/day_$day.txt"
+    # Run with timeit to get time
+    "$PYTHON_EXE" -m timeit -s "import days" "days.day_$day.main(['data/day_$day.txt'])" | tail -n 1
+}
+
+run-all-days() {
+    for i in {1..25}; do
+        day=$(printf "%02d" "$i")
+        if [ -f "$REPO_ROOT/days/day_$day.py" ]; then
+            run-day "$i"
+        fi
+    done
+}
+
+run-test() {
+    if [ -z "$1" ]; then
+        echo "Must provide day to run" 1>&2
+        return 1
+    fi
+    day=$(printf "%02d" "$1")
+    "$PYTHON_EXE" -m pytest "$REPO_ROOT/tests/test_day_$day.py"
+}
+
+run-all-tests() {
+    "$PYTHON_EXE" -m pytest "$REPO_ROOT/tests"
+}
+
+run-mypy() {
+    "$PYTHON_EXE" -m mypy --strict "$REPO_ROOT/days" "$REPO_ROOT/tests"
+}
+
+autoformat() {
+    "$PYTHON_EXE" -m isort --profile black -l 79 --gitignore --combine-as --combine-star --force-grid-wrap -- "$REPO_ROOT/days" "$REPO_ROOT/tests"
+    "$PYTHON_EXE" -m black -l 79 -- "$REPO_ROOT/days" "$REPO_ROOT/tests"
+}
+
+help() {
+    echo "$0 <task> <args>"
+    echo "Tasks:"
+    compgen -A function | cat -n
+}
+
+if [ -z "$1" ]; then
+    help
+else
+    "${@:-check}"
+fi
