@@ -2,12 +2,31 @@ from __future__ import annotations
 
 import enum
 import sys
+from dataclasses import dataclass
+
+WIN_POINTS = 6
+DRAW_POINTS = 3
+LOSS_POINTS = 0
 
 
-class Symbol(enum.IntEnum):
+class _SymbolType(enum.IntEnum):
     ROCK = enum.auto()
     PAPER = enum.auto()
     SCISSORS = enum.auto()
+
+
+@dataclass
+class _SymbolInfo:
+    type: _SymbolType
+    points: int
+    beats: _SymbolType
+    loses: _SymbolType
+
+
+class Symbol(_SymbolInfo, enum.Enum):
+    ROCK = _SymbolType.ROCK, 1, _SymbolType.SCISSORS, _SymbolType.PAPER
+    PAPER = _SymbolType.PAPER, 2, _SymbolType.ROCK, _SymbolType.SCISSORS
+    SCISSORS = _SymbolType.SCISSORS, 3, _SymbolType.PAPER, _SymbolType.ROCK
 
     @classmethod
     def from_char(cls, char: str) -> Symbol:
@@ -18,69 +37,40 @@ class Symbol(enum.IntEnum):
             return cls.PAPER
         if char in ("C", "Z"):
             return cls.SCISSORS
-        raise Exception(f"Invalid value {char}")
+        raise Exception(f"Invalid value '{char}'")
 
-    @property
-    def points(self) -> int:
-        if self is Symbol.ROCK:
-            return 1
-        if self is Symbol.PAPER:
-            return 2
-        if self is Symbol.SCISSORS:
-            return 3
-        raise Exception(f"Invalid value {self}")
-
-    def beats(self) -> Symbol:
-        if self is Symbol.ROCK:
-            return Symbol.SCISSORS
-        elif self is Symbol.PAPER:
-            return Symbol.ROCK
-        else:
-            # Is scissors.
-            return Symbol.PAPER
-
-    def loses(self) -> Symbol:
-        if self is Symbol.ROCK:
-            return Symbol.PAPER
-        elif self is Symbol.PAPER:
-            return Symbol.SCISSORS
-        else:
-            # Is scissors.
-            return Symbol.ROCK
+    @classmethod
+    def from_type(cls, symbol_type: _SymbolType) -> Symbol:
+        for option in cls:
+            if symbol_type is option.type:
+                return option
+        raise Exception(f"Invalid symbole type '{symbol_type}'")
 
     def round_result_part_1(them: Symbol, you: str) -> int:
-        loss_points = 0
-        draw_points = 3
-        win_points = 6
-
         you_symbol = Symbol.from_char(you)
 
-        if them.beats() is you_symbol:
-            points = loss_points
-        elif them.loses() is you_symbol:
-            points = win_points
+        if them.beats is you_symbol.type:
+            points = LOSS_POINTS
+        elif them.loses is you_symbol.type:
+            points = WIN_POINTS
         else:
             # Is a draw.
-            points = draw_points
+            points = DRAW_POINTS
 
         return points + you_symbol.points
 
     def round_result_part_2(them: Symbol, you: str) -> int:
-        loss_points = 0
-        draw_points = 3
-        win_points = 6
-
         if you == "X":
             # Need to lose.
-            you_symbol = them.beats()
-            points = loss_points
+            you_symbol = Symbol.from_type(them.beats)
+            points = LOSS_POINTS
         elif you == "Y":
             # Need to draw.
             you_symbol = them
-            points = draw_points
+            points = DRAW_POINTS
         elif you == "Z":
-            you_symbol = them.loses()
-            points = win_points
+            you_symbol = Symbol.from_type(them.loses)
+            points = WIN_POINTS
         else:
             raise Exception(f"Invalid value {you}")
 
