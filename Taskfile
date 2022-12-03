@@ -7,7 +7,7 @@ REPO_ROOT="$(git rev-parse --show-toplevel)"
 
 PYTHON_EXE="/usr/bin/python3.11"
 
-run-day() {
+run-day-no-time() {
     if [ -z "$1" ]; then
         echo "Must provide day to run" 1>&2
         return 1
@@ -17,6 +17,12 @@ run-day() {
 
     echo "----- Day $day -----"
     "$PYTHON_EXE" "$REPO_ROOT/days/day_$day.py" "$REPO_ROOT/data/day_$day.txt" $@
+}
+
+run-day() {
+    run-day-no-time $@
+    day=$(printf "%02d" "$1")
+    shift
     # Run with timeit to get time
     "$PYTHON_EXE" -m timeit -s "import days" "days.day_$day.main(['data/day_$day.txt'])" | tail -n 1
 }

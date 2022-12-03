@@ -12,13 +12,11 @@ from days import day_01
 @pytest.fixture
 def bundles_test_data() -> list[list[int]]:
     with open(os.path.join(REPO_ROOT, "data", "day_01_test.txt")) as f:
-        return day_01.parse_text_into_bundles(f.readlines())
+        return day_01.parse_text_into_bundles(f.read().splitlines())
 
 
 def test_parse() -> None:
-    lines = [
-        line + "\n" for line in ("1", "", "2", "4", "9", "", "16", "1234")
-    ]
+    lines = ["1", "", "2", "4", "9", "", "16", "1234"]
     expected_bundles = [[1], [2, 4, 9], [16, 1234]]
     bundles = day_01.parse_text_into_bundles(lines)
     assert bundles == expected_bundles

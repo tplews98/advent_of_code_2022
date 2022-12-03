@@ -5,7 +5,6 @@ def parse_text_into_bundles(lines: list[str]) -> list[list[int]]:
     bundles: list[list[int]] = []
     current_bundle = []
     for line in lines:
-        line = line.strip()
         if line:
             # Part of same bundle.
             current_bundle.append(int(line))
@@ -38,7 +37,7 @@ def part_2(bundles: list[list[int]]) -> int:
 def main(args: list[str]) -> None:
     data_file = args[0]
     with open(data_file) as f:
-        bundles = parse_text_into_bundles(f.readlines())
+        bundles = parse_text_into_bundles(f.read().splitlines())
 
     print(f"Part 1: Max calories in bundle: {part_1(bundles)}")
     print(f"Part 2: Calories in top 3 bundles: {part_2(bundles)}")

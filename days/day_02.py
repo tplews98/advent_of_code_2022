@@ -30,7 +30,7 @@ class Symbol(_SymbolInfo, enum.Enum):
 
     @classmethod
     def from_char(cls, char: str) -> Symbol:
-        char = char.strip().upper()
+        char = char.upper()
         if char in ("A", "X"):
             return cls.ROCK
         if char in ("B", "Y"):
@@ -83,7 +83,7 @@ def parse_text_into_rounds(lines: list[str]) -> list[tuple[Symbol, str]]:
         if not line:
             continue
 
-        first, second = line.strip().split()
+        first, second = line.split()
         rounds.append((Symbol.from_char(first), second))
 
     return rounds
@@ -104,10 +104,10 @@ def part_2(rounds: list[tuple[Symbol, str]]) -> int:
 def main(args: list[str]) -> None:
     data_file = args[0]
     with open(data_file) as f:
-        rounds = parse_text_into_rounds(f.readlines())
+        rounds = parse_text_into_rounds(f.read().splitlines())
 
     print(f"Part 1: Total points: {part_1(rounds)}")
-    print(f"Part 1: Total points: {part_2(rounds)}")
+    print(f"Part 2: Total points: {part_2(rounds)}")
 
 
 if __name__ == "__main__":

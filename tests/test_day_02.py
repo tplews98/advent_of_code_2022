@@ -17,7 +17,7 @@ def rounds_test_data() -> list[tuple[Symbol, str]]:
 
 
 def test_parse() -> None:
-    lines = [l + "\n" for l in ("A X", "B X", "C Y", "B Z")]
+    lines = ["A X", "B X", "C Y", "B Z"]
     expected_rounds = [
         (Symbol.ROCK, "X"),
         (Symbol.PAPER, "X"),
