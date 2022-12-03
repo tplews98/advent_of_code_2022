@@ -50,8 +50,9 @@ run-all-tests() {
     "$PYTHON_EXE" -m pytest "$REPO_ROOT/tests" $@
 }
 
-run-mypy() {
+run-sa() {
     "$PYTHON_EXE" -m mypy --strict "$REPO_ROOT/days" "$REPO_ROOT/tests" $@
+    "$PYTHON_EXE" -m pylint --errors-only "$REPO_ROOT/days" "$REPO_ROOT/tests" $@
 }
 
 autoformat() {
