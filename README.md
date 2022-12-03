@@ -11,12 +11,13 @@ should be `day_xx_input.txt`, and test input `day_xx_test_input.txt`.
 
 Taskfile commands:
 
-- `run-day <day>`: Run a given day
-- `run-test <day>`: Run the tests for a given day
-- `run-all-days`: Run all days that have solutions
-- `run-all-tests`: Run all the tests for days which have solutions
-- `run-sa`: Run mypy and pylint on all days and tests
-- `autoformat`: Autoformat python code with black and isort.
+- `day <day>`: Run a given day
+- `day <day>`: Run a given day without timing it
+- `test <day>`: Run the tests for a given day
+- `all-days`: Run all days that have solutions
+- `all-tests`: Run all the tests for days which have solutions
+- `sa`: Run mypy and pylint on all days and tests
+- `autoformat`: Autoformat python code with black and isort
 
 python3.9 or greater is required due the typing used. Change the `PYTHON_EXE`
 variable in `Taskfile` to run with a different executable than the default.

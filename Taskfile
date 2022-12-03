@@ -7,50 +7,50 @@ REPO_ROOT="$(git rev-parse --show-toplevel)"
 
 PYTHON_EXE="/usr/bin/python3.11"
 
-run-day-no-time() {
+day-no-time() {
     if [ -z "$1" ]; then
         echo "Must provide day to run" 1>&2
         return 1
     fi
-    day=$(printf "%02d" "$1")
+    day_str=$(printf "%02d" "$1")
     shift
 
-    echo "----- Day $day -----"
-    "$PYTHON_EXE" "$REPO_ROOT/days/day_$day.py" "$REPO_ROOT/data/day_$day.txt" $@
+    echo "----- Day $day_str -----"
+    "$PYTHON_EXE" "$REPO_ROOT/days/day_$day_str.py" "$REPO_ROOT/data/day_$day_str.txt" $@
 }
 
-run-day() {
-    run-day-no-time $@
-    day=$(printf "%02d" "$1")
+day() {
+    day-no-time $@
+    day_str=$(printf "%02d" "$1")
     shift
     # Run with timeit to get time
-    "$PYTHON_EXE" -m timeit -s "import days" "days.day_$day.main(['data/day_$day.txt'])" | tail -n 1
+    "$PYTHON_EXE" -m timeit -s "import days" "days.day_$day_str.main(['data/day_$day_str.txt'])" | tail -n 1
 }
 
-run-all-days() {
+all-days() {
     for i in {1..25}; do
-        day=$(printf "%02d" "$i")
-        if [ -f "$REPO_ROOT/days/day_$day.py" ]; then
-            run-day "$i" $@
+        day_str=$(printf "%02d" "$i")
+        if [ -f "$REPO_ROOT/days/day_$day_str.py" ]; then
+            day "$i" $@
         fi
     done
 }
 
-run-test() {
+test() {
     if [ -z "$1" ]; then
         echo "Must provide day to run" 1>&2
         return 1
     fi
-    day=$(printf "%02d" "$1")
+    day_str=$(printf "%02d" "$1")
     shift
-    "$PYTHON_EXE" -m pytest "$REPO_ROOT/tests/test_day_$day.py" $@
+    "$PYTHON_EXE" -m pytest "$REPO_ROOT/tests/test_day_$day_str.py" $@
 }
 
-run-all-tests() {
+all-tests() {
     "$PYTHON_EXE" -m pytest "$REPO_ROOT/tests" $@
 }
 
-run-sa() {
+sa() {
     "$PYTHON_EXE" -m mypy --strict "$REPO_ROOT/days" "$REPO_ROOT/tests" $@
     "$PYTHON_EXE" -m pylint --errors-only "$REPO_ROOT/days" "$REPO_ROOT/tests" $@
 }
