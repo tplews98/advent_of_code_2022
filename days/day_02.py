@@ -46,6 +46,7 @@ class Symbol(_SymbolInfo, enum.Enum):
                 return option
         raise Exception(f"Invalid symbole type '{symbol_type}'")
 
+    @staticmethod
     def round_result_part_1(them: Symbol, you: str) -> int:
         you_symbol = Symbol.from_char(you)
 
@@ -59,6 +60,7 @@ class Symbol(_SymbolInfo, enum.Enum):
 
         return points + you_symbol.points
 
+    @staticmethod
     def round_result_part_2(them: Symbol, you: str) -> int:
         if you == "X":
             # Need to lose.
