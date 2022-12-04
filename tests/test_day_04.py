@@ -30,11 +30,13 @@ def test_parse() -> None:
 
 
 def test_overlapping_pairs() -> None:
-    assignment_pairs = [
-        [(SectionAssignment(1, 1), SectionAssignment(2, 2)), False, False],
-        [(SectionAssignment(1, 2), SectionAssignment(2, 2)), True, True],
-        [(SectionAssignment(1, 2), SectionAssignment(2, 3)), False, True],
-        [(SectionAssignment(5, 9), SectionAssignment(6, 7)), True, True],
+    assignment_pairs: list[
+        tuple[tuple[SectionAssignment, SectionAssignment], bool, bool]
+    ] = [
+        ((SectionAssignment(1, 1), SectionAssignment(2, 2)), False, False),
+        ((SectionAssignment(1, 2), SectionAssignment(2, 2)), True, True),
+        ((SectionAssignment(1, 2), SectionAssignment(2, 3)), False, True),
+        ((SectionAssignment(5, 9), SectionAssignment(6, 7)), True, True),
     ]
     for pair, complete_overlap, partial_overlap in assignment_pairs:
         assert (
