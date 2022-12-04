@@ -84,7 +84,7 @@ def main(args: list[str]) -> None:
         bags = parse_text_into_bags(f.read().splitlines())
 
     print(f"Part 1: Total priority of shared items: {part_1(bags)}")
-    print(f"Part 2: Total points: {part_2(bags)}")
+    print(f"Part 2: Total priority of groups: {part_2(bags)}")
 
 
 if __name__ == "__main__":
