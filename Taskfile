@@ -60,6 +60,30 @@ autoformat() {
     "$PYTHON_EXE" -m black -l 79 -- "$REPO_ROOT/days" "$REPO_ROOT/tests"
 }
 
+create-day-from-template() {
+    if [ -z "$1" ]; then
+        echo "Must provide day to create from template" 1>&2
+        return 1
+    fi
+    day_str=$(printf "%02d" "$1")
+
+    day_file="$REPO_ROOT/days/day_$day_str.py"
+    if [ -f "$day_file" ]; then
+        echo "$day_file already exists" 1>&2
+        return 1
+    fi
+    cp "$REPO_ROOT/days/day_template.py" "$day_file"
+    sed -i 's~day_template~'"day_$day_str"'~g' -- "$day_file"
+
+    test_file="$REPO_ROOT/tests/test_day_$day_str.py"
+    if [ -f "$test_file" ]; then
+        echo "$test_file already exists" 1>&2
+        return 1
+    fi
+    cp "$REPO_ROOT/tests/day_template.py" "$test_file"
+    sed -i 's~day_template~'"day_$day_str"'~g' -- "$test_file"
+}
+
 help() {
     echo "$0 <task> <args>"
     echo "Tasks:"
