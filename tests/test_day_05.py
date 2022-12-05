@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import os
 import sys
-from typing import Any
 
 import pytest
 
@@ -50,13 +49,13 @@ def test_stacks_to_str() -> None:
     assert day_05.stacks_to_str(stacks) == expected_str
 
 
-def test_part_1(parsed_test_data: Any) -> None:
+def test_part_1(parsed_test_data: tuple[list[list[str]], list[Move]]) -> None:
     expected_top_stacks = "CMZ"
     top_stacks = day_05.part_1(*parsed_test_data)
     assert top_stacks == expected_top_stacks
 
 
-def test_part_2(parsed_test_data: Any) -> None:
+def test_part_2(parsed_test_data: tuple[list[list[str]], list[Move]]) -> None:
     expected_top_stacks = "MCD"
     top_stacks = day_05.part_2(*parsed_test_data)
     assert top_stacks == expected_top_stacks

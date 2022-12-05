@@ -4,10 +4,7 @@ import copy
 import re
 import sys
 from dataclasses import dataclass
-from typing import (
-    Any,
-    Iterable,
-)
+from typing import Iterable
 
 
 @dataclass
@@ -55,7 +52,7 @@ def perform_moves_on_stacks_part_2(
     return stacks_new
 
 
-def stacks_to_str(stacks: list[list[str]]) -> None:
+def stacks_to_str(stacks: list[list[str]]) -> str:
     max_height = max(len(stack) for stack in stacks)
     lines = [" " + "   ".join([str(i + 1) for i in range(len(stacks))]) + " "]
     for idx in range(max_height):
@@ -74,7 +71,7 @@ def stacks_to_str(stacks: list[list[str]]) -> None:
     return "\n".join(reversed(lines))
 
 
-def _parse_stacks(lines: Iterable[str]) -> Any:
+def _parse_stacks(lines: Iterable[str]) -> list[list[str]]:
     # Example stack data:
     #     [D]
     # [N] [C]
@@ -102,7 +99,7 @@ def _parse_stacks(lines: Iterable[str]) -> Any:
 
 
 def parse_text_into_stacks_and_moves(
-    lines: Iterable[str],
+    lines: list[str],
 ) -> tuple[list[list[str]], list[Move]]:
     # Find the first line starting with "move". Everything above it will be the
     # stacks, everything below it (including itself) will be the moves.
@@ -123,7 +120,7 @@ def part_1(stacks: list[list[str]], moves: Iterable[Move]) -> str:
     return "".join(stack[-1] for stack in stacks_new)
 
 
-def part_2(stacks: list[list[str]], moves: Iterable[Move]) -> Any:
+def part_2(stacks: list[list[str]], moves: Iterable[Move]) -> str:
     stacks_new = perform_moves_on_stacks_part_2(stacks, moves)
     return "".join(stack[-1] for stack in stacks_new)
 
