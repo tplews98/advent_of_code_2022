@@ -4,7 +4,7 @@ import sys
 
 
 def _find_idx_after_uniq_chars(data: str, num_uniq_chars: int) -> int:
-    for idx in range(num_uniq_chars, len(data)):
+    for idx in range(num_uniq_chars - 1, len(data)):
         if (
             len(set(data[idx - num_uniq_chars + 1 : idx + 1]))
             == num_uniq_chars

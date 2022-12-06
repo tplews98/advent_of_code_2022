@@ -19,6 +19,7 @@ def parsed_test_data() -> str:
 
 def test_part_1(parsed_test_data: str) -> None:
     assert day_06.part_1(parsed_test_data) == 7
+    assert day_06.part_1("abcd") == 4
     assert day_06.part_1("bvwbjplbgvbhsrlpgdmjqwftvncz") == 5
     assert day_06.part_1("nppdvjthqldpwncqszvftbrmjlhg") == 6
     assert day_06.part_1("nznrnfrfntjfmvfwmzdfjlvtqnbhcprsg") == 10
@@ -27,6 +28,7 @@ def test_part_1(parsed_test_data: str) -> None:
 
 def test_part_2(parsed_test_data: str) -> None:
     assert day_06.part_2(parsed_test_data) == 19
+    assert day_06.part_2("abcdefghijklmn") == 14
     assert day_06.part_2("bvwbjplbgvbhsrlpgdmjqwftvncz") == 23
     assert day_06.part_2("nppdvjthqldpwncqszvftbrmjlhg") == 23
     assert day_06.part_2("nznrnfrfntjfmvfwmzdfjlvtqnbhcprsg") == 29
