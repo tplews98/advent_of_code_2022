@@ -52,7 +52,17 @@ all-tests() {
 
 sa() {
     "$PYTHON_EXE" -m mypy --strict "$REPO_ROOT/days" "$REPO_ROOT/tests" $@
-    "$PYTHON_EXE" -m pylint --errors-only "$REPO_ROOT/days" "$REPO_ROOT/tests" $@
+    "$PYTHON_EXE" -m pylint "$REPO_ROOT/days" "$REPO_ROOT/tests" $@           \
+        --ignore-pattern="day_template"                                       \
+        --disable="missing-module-docstring,\
+                   missing-class-docstring,\
+                   missing-function-docstring,\
+                   wrong-import-position,\
+                   unspecified-encoding,\
+                   invalid-name,\
+                   no-else-return,\
+                   redefined-outer-name"
+
 }
 
 autoformat() {
