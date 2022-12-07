@@ -133,19 +133,21 @@ def part_1(root_dir: Directory) -> int:
 
 
 def part_2(root_dir: Directory) -> int:
-    # Sort all dirs in ascending size order.
-    all_directories_sorted = sorted(
-        get_all_sub_dirs(root_dir) + [root_dir],
-        key=lambda directory: directory.find_size(),
-    )
-    total_size = root_dir.find_size()
+    root_dir_size = root_dir.find_size()
+    space_needed_to_delete = 30000000 - 70000000 + root_dir_size
+    if space_needed_to_delete > root_dir_size:
+        raise Exception("Not possible to delete enough free up required space")
 
-    # Find the smallest dir that frees up enough space and return its size.
-    for directory in all_directories_sorted:
-        if 70000000 - total_size + directory.find_size() > 30000000:
-            return directory.find_size()
+    smallest_size_dir_to_delete = root_dir_size
+    for directory in get_all_sub_dirs(root_dir):
+        dir_size = directory.find_size()
+        # If the directory has a size big enough to free up required space if
+        # deleted and is smaller than the current smallest, set it to be the
+        # current smallest.
+        if space_needed_to_delete <= dir_size < smallest_size_dir_to_delete:
+            smallest_size_dir_to_delete = dir_size
 
-    raise Exception("Could not delete a directory to free up enough space")
+    return smallest_size_dir_to_delete
 
 
 def main(args: list[str]) -> None:

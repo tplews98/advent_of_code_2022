@@ -29,9 +29,7 @@ def part_1(bundles: list[list[int]]) -> int:
 
 
 def part_2(bundles: list[list[int]]) -> int:
-    sorted_bundles = sorted(
-        bundles, key=lambda bundle: sum(bundle), reverse=True
-    )
+    sorted_bundles = sorted(bundles, key=sum, reverse=True)
     top_3_bundle_sum = sum(sum(bundle) for bundle in sorted_bundles[:3])
     return top_3_bundle_sum
 
