@@ -60,6 +60,13 @@ autoformat() {
     "$PYTHON_EXE" -m black -l 79 -- "$REPO_ROOT/days" "$REPO_ROOT/tests"
 }
 
+everything() {
+    all-days
+    all-tests
+    sa
+    autoformat
+}
+
 create-day-from-template() {
     if [ -z "$1" ]; then
         echo "Must provide day to create from template" 1>&2

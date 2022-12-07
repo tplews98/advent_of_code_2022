@@ -18,6 +18,7 @@ Taskfile commands:
 - `all-tests`: Run all the tests for days which have solutions
 - `sa`: Run mypy and pylint on all days and tests
 - `autoformat`: Autoformat python code with black and isort
+- `everything`: Run all days, all tests, sa, and autoformat
 
 python3.9 or greater is required due the typing used. Change the `PYTHON_EXE`
 variable in `Taskfile` to run with a different executable than the default.
