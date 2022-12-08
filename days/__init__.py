@@ -6,6 +6,7 @@ __all__ = (
     "day_05",
     "day_06",
     "day_07",
+    "day_08",
 )
 
 from . import (
@@ -16,4 +17,5 @@ from . import (
     day_05,
     day_06,
     day_07,
+    day_08,
 )

@@ -26,12 +26,8 @@ def test_parse() -> None:
 
 
 def test_part_1(parsed_test_data: Any) -> None:
-    expected_part_1_ans = 0
-    part_1_ans = day_template.part_1(parsed_test_data)
-    assert part_1_ans == expected_part_1_ans
+    assert day_template.part_1(parsed_test_data) == 0
 
 
 def test_part_2(parsed_test_data: Any) -> None:
-    expected_part_2_ans = 0
-    part_2_ans = day_template.part_2(parsed_test_data)
-    assert part_2_ans == expected_part_2_ans
+    assert day_template.part_2(parsed_test_data) == 0
